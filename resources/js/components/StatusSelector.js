@@ -54,7 +54,7 @@ export default function StatusSelector(props) {
     <TableCell >        
     <Button onClick={handleClickOpen}>Status</Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Current status: <br></br>{props.job.status}</DialogTitle>
+        <DialogTitle>Current st atus: <br></br>{props.job.status}</DialogTitle>
         <DialogContent>
           <form className={classes.container}>
             <FormControl className={classes.formControl}>
