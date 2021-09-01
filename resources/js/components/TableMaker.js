@@ -28,6 +28,7 @@ const useStyles = makeStyles({
   },
 });
 
+
 function Row(props) {
   const { row } = props;
   const  properties  = props.properties;
@@ -39,7 +40,6 @@ function Row(props) {
     if(data.id === row.property){
       property = data;
     }})
-
   return (
     <React.Fragment >
       <TableRow className={classes.root} onClick={() => setOpen(!open)}>
@@ -59,7 +59,7 @@ function Row(props) {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 1 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-          <UpdateJobForm currentJob={row} properties = {properties} onUpdate = {props.onUpdate} onDelete = {props.onDelete} />
+          <UpdateJobForm currentJob={row} properties = {properties} onUpdate = {props.onUpdate} onDelete = {props.onDelete} response = {props.response}/>
           </Collapse>
         </TableCell>
       </TableRow>
@@ -67,7 +67,7 @@ function Row(props) {
   );
 }
 
-const TableMaker = ({ onUpdate, onDelete, jobs, properties }) => {
+const TableMaker = ({ onUpdate, onDelete, jobs, properties, response }) => {
   const classes = useStyles();
 
   return (
@@ -86,7 +86,7 @@ const TableMaker = ({ onUpdate, onDelete, jobs, properties }) => {
         </TableHead>
         <TableBody>
           {jobs.map((row) => (
-            <Row key={row.id} row={row} onUpdate = {onUpdate} onDelete = {onDelete} properties = {properties}/>
+            <Row key={row.id} row={row} onUpdate = {onUpdate} onDelete = {onDelete} properties = {properties} response = {response}/>
           ))}
         </TableBody>
       </Table>

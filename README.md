@@ -1,3 +1,5 @@
+CRUD SPA built with a Laravel API and react modules for the UI
+
 ## Requirements
 >php 7.4
 >mysql

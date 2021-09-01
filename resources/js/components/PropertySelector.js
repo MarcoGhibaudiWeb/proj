@@ -71,7 +71,7 @@ export default function PropertySelector(props) {
 
     
     <div>        
-    <Button style={mystyle} onClick={handleClickOpen}>Property</Button>
+    <Button style={mystyle} onClick={handleClickOpen}>Change Property</Button>
     <span style={{color: "red"}}>{(errors) ? errors["property"]: ''}</span>
 
       <Dialog open={open} onClose={handleClose}>

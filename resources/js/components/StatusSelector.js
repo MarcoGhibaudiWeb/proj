@@ -57,7 +57,7 @@ export default function StatusSelector(props) {
 
   return (
     <div>        
-    <Button  className={classes.button} onClick={handleClickOpen}>Status</Button>
+    <Button  className={classes.button} onClick={handleClickOpen}>Change Status</Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Current status: <br></br>{props.job.status}</DialogTitle>
         <DialogContent >

@@ -13,6 +13,7 @@ class Main extends Component {
     this.state = {
       jobs: [],
       properties: [],
+      response: [],
     }
     this.handleAddJob = this.handleAddJob.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
@@ -24,7 +25,7 @@ class Main extends Component {
     /* fetch API in action */
     fetch('/api/jobs')
       .then(response => {
-        return response.json();
+        return response.json();       
       })
       .then(jobs => {
         //Fetched job is stored in the state
@@ -51,6 +52,7 @@ class Main extends Component {
       body: JSON.stringify(job)
     })
       .then(response => {
+        this.setState({ response });
         return response.json();
       })
     //Refresh jobs list in the state
@@ -71,6 +73,7 @@ class Main extends Component {
     //Refresh jobs list in the state
     fetch('/api/jobs')
       .then(response => {
+        this.setState({ response });
         return response.json();
       })
       .then(jobs => {
@@ -90,6 +93,7 @@ class Main extends Component {
       body: JSON.stringify(job)
     })
       .then(response => {
+        this.setState({ response });
         return response.json();
       })
     //Refresh jobs list in the state
@@ -112,9 +116,9 @@ class Main extends Component {
     return (
       <div style={mystyle}>
         <h3>Jobs List</h3>
-        <TableMaker onUpdate={this.handleUpdate} onDelete={this.handleDelete} jobs={this.state.jobs} properties={this.state.properties} />
+        <TableMaker onUpdate={this.handleUpdate} onDelete={this.handleDelete} jobs={this.state.jobs} response = {this.state.response} properties={this.state.properties} />
         <h3 style={{margin: "0 0 2rem 0"}}>Add a new Job</h3>
-        <AddJob onAdd={this.handleAddJob} properties={this.state.properties} />
+        <AddJob onAdd={this.handleAddJob} properties={this.state.properties} response = {this.state.response} />
       </div>
     );
   }

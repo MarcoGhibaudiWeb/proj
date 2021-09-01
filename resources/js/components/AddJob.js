@@ -26,100 +26,79 @@ class AddJob extends Component {
   }
 
   handleInput(key, e) {
-
     var state = Object.assign({}, this.state.newJob);
     state[key] = e.target.value;
-    if (this.validateInput(key, e.target.value)) {
-      this.setState({ newJob: state });
-    };
+    this.validateInput(key, e.target.value) 
+    this.setState({ newJob: state })
+
   }
-  /* This method is invoked when submit button is pressed */
   handleSubmit(e) {
-    //preventDefault prevents page reload   
     e.preventDefault();
-    /*A call back to the onAdd props. The current
-     *state is passed as a param
-     */
-    if (!this.state.errors["description"] && !this.state.errors["summary"] && !this.state.errors["first name"] && !this.state.errors["last name"] && this.state.newJob.property) {
+    if (!this.state.errors["description"] && !this.state.errors["summary"] && !this.state.errors["first name"] && !this.state.errors["last name"] && !this.state.errors["property"]) {
       this.props.onAdd(this.state.newJob);
     }
     else {
       for (const key in this.state.newJob) {
         let value = this.state.newJob[key];
-        console.log(value);
         this.validateInput(key, value);
       }
-      alert('Please fill any missing value')
+      alert('Please check any incorrect value')
     }
 
   }
 
   handleInputProperty(key, e) {
-    /*Duplicating and updating the state */
     var state = Object.assign({}, this.state.newJob);
     state[key] = e;
-    console.log(state);
+    this.validateInput(key, e) 
     this.setState({ newJob: state });
   }
 
   validateInput(key, value) {
     let errors = this.state.errors;
-    let response = true;
-    console.log(key);
-
     switch (key) {
-
       case 'description':
         if (value.length > 500) {
           errors["description"] = "Max 500 char";
-          response = false;
         } else if (value === null || value.match(/^ *$/) !== null) {
           errors["description"] = "Can't be empty";
-          response = false;
         } else {
           errors["description"] = "";
         };
         break;
-
       case 'summary':
         if (value.length > 150) {
           errors["summary"] = "Max 150 char";
-          response = false;
         } else if (value === null || value.match(/^ *$/) !== null) {
           errors["summary"] = "Can't be empty";
-          response = false;
         } else { errors["summary"] = ""; }
         break;
       case 'fname':
         if (value.length > 20) {
           errors["first name"] = "Max 20 char";
-          response = false;
         } else if (value === null || value.match(/^ *$/) !== null) {
           errors["first name"] = "Can't be empty";
-          response = false;
         } else { errors["first name"] = ""; }
         break;
       case 'lname':
         if (value.length > 20) {
           errors["last name"] = "Max 20 char";
-          response = false;
         } else if (value === null || value.match(/^ *$/) !== null) {
           errors["last name"] = "Can't be empty";
-          response = false;
         } else { errors["last name"] = ""; }
         break;
       case 'property':
         if (value === null || value.match(/^ *$/) !== null) {
           errors["property"] = "Can't be empty";
-          response = false;
         } else { errors["property"] = ""; }
         break;
-
-
-
+      case 'status':
+        if (value === null || value.match(/^ *$/) !== null) {
+          errors["status"] = "Can't be empty";
+        } else { errors["status"] = ""; }
+        break;
     }
     this.setState({ errors: errors });
-    return response;
   }
 
   render() {
@@ -156,8 +135,8 @@ class AddJob extends Component {
           <span style={{ color: "red" }}>{this.state.errors["last name"]}</span>
         </FormGroup>
         <PropertySelector properties={this.props.properties} errors={this.state.errors} onSubmit={this.handleInputProperty} />
-        <span style={{ color: "red" }}>{this.state.errors["property"]}</span>
-        <Button onClick={this.handleSubmit}>Submit</Button>
+        <Button onClick={this.handleSubmit}>Add Job</Button>
+        <span style={{ color: "green" }}>{(this.props.response.status === 200 || this.props.response.status === 201) ? "Query succesful": ''}</span>
       </Form>
 
 

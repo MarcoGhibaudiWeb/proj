@@ -3,6 +3,7 @@ import Button from '@material-ui/core/Button';
 import PropertySelector from './PropertySelector';
 import StatusSelector from './StatusSelector';
 import TableCell from '@material-ui/core/TableCell';
+import TableRow from '@material-ui/core/TableRow';
 import { Form, FormTextarea, FormGroup, FormInput } from "shards-react";
 
 
@@ -19,7 +20,7 @@ class UpdateJobForm extends Component {
                 status: props.currentJob.status,
             },
             errors: {},
-            propertyName : '',
+            propertyName: '',
 
         }
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,86 +28,115 @@ class UpdateJobForm extends Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.handleInputProperty = this.handleInputProperty.bind(this);
         this.validateInput = this.validateInput.bind(this);
-        this.getPropertyName = this.getPropertyName.bind(this);     
+        this.getPropertyName = this.getPropertyName.bind(this);
     }
 
-    componentDidMount(){
-        this.getPropertyName(this.props.currentJob)
+    componentDidMount() {
+        this.getPropertyName(this.props.currentJob);
     }
 
     handleInput(key, e) {
         var state = Object.assign({}, this.state.value);
         state[key] = e.target.value;
-        if (this.validateInput(key, e.target.value)) {
-            this.setState({ value: state });
-        };
+        this.validateInput(key, e.target.value)
+        this.setState({ value: state });
+
     }
 
     handleInputProperty(key, e) {
         var state = Object.assign({}, this.state.value);
         state[key] = e;
+        this.validateInput(key, e)
         this.setState({ value: state });
         this.getPropertyName(state);
     }
 
     handleSubmit(e) {
         e.preventDefault();
-        if (!this.state.errors["description"] && !this.state.errors["summary"]) {
+        if (!this.state.errors["description"] && !this.state.errors["summary"] && !this.state.errors["property"] && !this.state.errors["status"] ) {
             let id = this.state.row.currentJob.id;
             this.props.onUpdate(this.state.value, id);
         }
-        else { alert('Please fill any missing value') }
+        else { alert('Please check any incorrect value') }
     }
 
     validateInput(key, value) {
         let errors = this.state.errors;
-        let response = true;
         switch (key) {
-            case 'description':
-                if (value.length > 500) {
-                    errors["description"] = "Max 500 char";
-                    response = false;
-                } else { errors["description"] = ""; };
-                break;
-
-            case 'summary':
-                if (value.length > 150) {
-                    errors["summary"] = "Max 150 char";
-                    response = false;
-                } else { errors["summary"] = ""; };
+          case 'description':
+            if (value.length > 500) {
+              errors["description"] = "Max 500 char";
+            } else if (value === null || value.match(/^ *$/) !== null) {
+              errors["description"] = "Can't be empty";
+            } else {
+              errors["description"] = "";
+            };
+            break;
+          case 'summary':
+            if (value.length > 150) {
+              errors["summary"] = "Max 150 char";
+            } else if (value === null || value.match(/^ *$/) !== null) {
+              errors["summary"] = "Can't be empty";
+            } else { errors["summary"] = ""; }
+            break;
+          case 'fname':
+            if (value.length > 20) {
+              errors["first name"] = "Max 20 char";
+            } else if (value === null || value.match(/^ *$/) !== null) {
+              errors["first name"] = "Can't be empty";
+            } else { errors["first name"] = ""; }
+            break;
+          case 'lname':
+            if (value.length > 20) {
+              errors["last name"] = "Max 20 char";
+            } else if (value === null || value.match(/^ *$/) !== null) {
+              errors["last name"] = "Can't be empty";
+            } else { errors["last name"] = ""; }
+            break;
+          case 'property':
+            if (value === null || value.match(/^ *$/) !== null) {
+              errors["property"] = "Can't be empty";
+            } else { errors["property"] = ""; }
+            break;
+          case 'status':
+            if (value === null || value.match(/^ *$/) !== null) {
+              errors["status"] = "Can't be empty";
+            } else { errors["status"] = ""; }
+            break;
         }
         this.setState({ errors: errors });
-        return response;
-    }
+      }
+
 
     handleDelete() {
         this.props.onDelete(this.props.currentJob.id);
     }
 
-    getPropertyName(state){
-        for (let i = 0; i < this.props.properties.length; i++)  {  
-            if (this.props.properties[i].id == state.property){
-                this.setState({propertyName :  this.props.properties[i].name})
-                
-            } 
+    getPropertyName(state) {
+        for (let i = 0; i < this.props.properties.length; i++) {
+            if (this.props.properties[i].id == state.property) {
+                this.setState({ propertyName: this.props.properties[i].name })
+
+            }
         }
-        
+
     }
 
     render() {
         const submitstyle = {
-            position: "relative",
-            right: "1rem"
+            marginLeft : "1rem",
+            padding : "1rem",
         };
         const border = {
             border: "1px black solid",
+            marginBottom : "1rem"
         };
         const span = {
-            borderBottom: "1px black solid",
-            margin: "-3rem 0 3rem 0.3rem"
+            marginLeft: "0.3rem",
+            
         }
 
-      
+        this.props.response.status
 
         return (
             <Form onSubmit={this.handleSubmit}>
@@ -121,18 +151,17 @@ class UpdateJobForm extends Component {
                     <FormTextarea placeholder="Max 500 char" onChange={(e) => this.handleInput('description', e)} />
                     <span style={{ color: "red" }}>{this.state.errors["description"]}</span>
                 </FormGroup>
-                <FormGroup style={{display : 'inline-block'}}>
+                <FormGroup style={{ display: 'inline-block' }}>
                     <PropertySelector properties={this.props.properties} onSubmit={this.handleInputProperty} job={this.state.row.currentJob} />
                     <span style={span}>{(this.state.propertyName) ? this.state.propertyName : ''}</span>
-                    <StatusSelector onSubmit={this.handleInputProperty} job={this.state.row.currentJob} />
-                    <span >{(this.state.value.status) ? this.state.value.status : ''}</span>
                     <div style={border}></div>
-                    <TableCell style={submitstyle}>
-                        <Button onClick={this.handleSubmit}>Submit</Button>
-                    </TableCell>
-                    <TableCell >
-                        <Button onClick={this.handleDelete}>Delete</Button>
-                    </TableCell>
+                    <StatusSelector onSubmit={this.handleInputProperty} job={this.state.row.currentJob} />
+                    <span style={span} >{(this.state.value.status) ? this.state.value.status : ''}</span>
+                    <div style={border}></div>
+                    <Button style={submitstyle} onClick={this.handleSubmit}>Update</Button>
+                    <span style={{ color: "green" }}>{(this.props.response.status === 200) ? "Query succesful": ''}</span>
+                    <Button onClick={this.handleDelete}>Delete</Button>
+
                 </FormGroup>
             </Form>
         );
