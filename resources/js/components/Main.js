@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import AddProduct from './AddProduct';
+import AddJob from './AddJob';
 import TableMaker from './TableMaker';
 
 
@@ -12,11 +12,11 @@ class Main extends Component {
     super();
     //Initialize the state in the constructor
     this.state = {
-      products: [],
+      jobs: [],
       properties: [],
       propertyIds: [],
     }
-    this.handleAddProduct = this.handleAddProduct.bind(this);
+    this.handleAddJob = this.handleAddJob.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.handleUpdate = this.handleUpdate.bind(this);
 
@@ -30,30 +30,30 @@ class Main extends Component {
       .then(response => {
         return response.json();
       })
-      .then(products => {
-        //Fetched product is stored in the state
-        this.setState({ products });
-        this.fetchPropertyIds(products);
+      .then(jobs => {
+        //Fetched job is stored in the state
+        this.setState({ jobs });
+        this.fetchPropertyIds(jobs);
       });
     fetch('/api/properties')
       .then(response => {
         return response.json();
       })
       .then(properties => {
-        //Fetched product is stored in the state
+        //Fetched job is stored in the state
         this.setState({ properties });
       });
   }
 
-  fetchPropertyIds(products){
+  fetchPropertyIds(jobs){
     const propertyIds = [];
-        this.state.products.map(product =>{
-          propertyIds.push(product.id);
+        this.state.jobs.map(job =>{
+          propertyIds.push(job.id);
         })
         this.setState({propertyIds})
   }
 
-  handleAddProduct(product) {
+  handleAddJob(job) {
     /*Fetch API for post request */
     fetch( 'api/jobs/', {
         method:'post',
@@ -63,7 +63,7 @@ class Main extends Component {
           'Content-Type': 'application/json'
         },
          
-        body: JSON.stringify(product)
+        body: JSON.stringify(job)
     })
     .then(response => {
 
@@ -73,9 +73,9 @@ class Main extends Component {
       .then(response => {
         return response.json();
       })
-      .then(products => {
-        //Fetched product is stored in the state
-        this.setState({ products });
+      .then(jobs => {
+        //Fetched job is stored in the state
+        this.setState({ jobs });
       });
   
   }
@@ -90,14 +90,14 @@ class Main extends Component {
 
           return response.json();
         })
-        .then(products => {
-          //Fetched product is stored in the state
-          this.setState({ products });
+        .then(jobs => {
+          //Fetched job is stored in the state
+          this.setState({ jobs });
         });
      
   }
   
-  handleUpdate(product, id) {
+  handleUpdate(job, id) {
 
     fetch( 'api/jobs/' + id, {
         method:'put',
@@ -105,7 +105,7 @@ class Main extends Component {
           'Accept': 'application/json',
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(product)
+        body: JSON.stringify(job)
     })
     .then(response => {
         return response.json();
@@ -114,9 +114,9 @@ class Main extends Component {
       .then(response => {
         return response.json();
       })
-      .then(products => {
-        //Fetched product is stored in the state
-        this.setState({ products });
+      .then(jobs => {
+        //Fetched job is stored in the state
+        this.setState({ jobs });
       });
      
    
@@ -139,8 +139,8 @@ margin: "0 auto"
       /* The extra divs are for the css styles */
       <div style={mystyle}>
         
-        <TableMaker onUpdate = {this.handleUpdate} onDelete = {this.handleDelete} products={this.state.products} properties={this.state.properties}/>
-        <AddProduct onAdd={this.handleAddProduct} properties={this.state.properties} />
+        <TableMaker onUpdate = {this.handleUpdate} onDelete = {this.handleDelete} jobs={this.state.jobs} properties={this.state.properties}/>
+        <AddJob onAdd={this.handleAddJob} properties={this.state.properties} />
       </div>
     );
   }

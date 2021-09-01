@@ -51,7 +51,7 @@ export default function StatusSelector(props) {
   };
 
   return (
-    <TableCell >        
+    <div>        
     <Button onClick={handleClickOpen}>Status</Button>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Current st atus: <br></br>{props.job.status}</DialogTitle>
@@ -67,7 +67,7 @@ export default function StatusSelector(props) {
               >
                 <option aria-label="None" value="" />
                 {statusList.map((status)  =>(              
-                    <option value={status}>{status}</option>))
+                    <option key={status} value={status}>{status}</option>))
                 }
                 
               </Select>
@@ -84,6 +84,6 @@ export default function StatusSelector(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      </TableCell>
+      </div>
   );
 }

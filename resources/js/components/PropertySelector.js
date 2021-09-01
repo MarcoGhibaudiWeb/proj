@@ -25,15 +25,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function PropertySelector(props) {
-  let properties;
+  const properties = props.properties;
   let errors;
   let currentProperty;
 
   if (props.errors){
   errors = props.errors}
   if(props.job){
-    const currentJob = props.job.currentProduct;
-    properties = props.job.properties
+    const currentJob = props.job;
     for (let i = 0; i < properties.length; i++)  {  
       if (properties[i].id === currentJob.property){
        currentProperty = properties[i]
@@ -70,10 +69,9 @@ export default function PropertySelector(props) {
   return (
 
     
-    <TableCell >        
+    <div >        
     <Button onClick={handleClickOpen}>Property</Button>
     <span style={{color: "red"}}>{(errors) ? errors["property"]: ''}</span>
-    <span style={{color: "red"}}>{(property) ? (properties ? properties[property - 1].name : '') : ''}</span>
 
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>{(currentProperty ? "Current Property:" + " " + currentProperty.name : "Pick a property")}</DialogTitle>
@@ -106,6 +104,6 @@ export default function PropertySelector(props) {
           </Button>
         </DialogActions>
       </Dialog>
-      </TableCell>
+      </div>
   );
 }

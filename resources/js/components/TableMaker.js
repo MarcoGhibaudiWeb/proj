@@ -9,7 +9,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import UpdateProductForm from './UpdateProductForm';
+import UpdateJobForm from './UpdateJobForm';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
 
@@ -56,7 +56,7 @@ function Row(props) {
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 1 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
-          <UpdateProductForm currentProduct={row} properties = {properties} onUpdate = {props.onUpdate} onDelete = {props.onDelete} />
+          <UpdateJobForm currentJob={row} properties = {properties} onUpdate = {props.onUpdate} onDelete = {props.onDelete} />
           </Collapse>
         </TableCell>
       </TableRow>
@@ -64,7 +64,7 @@ function Row(props) {
   );
 }
 
-const TableMaker = ({ onUpdate, onDelete, products, properties }) => {
+const TableMaker = ({ onUpdate, onDelete, jobs, properties }) => {
   const classes = useStyles();
 
   return (
@@ -82,7 +82,7 @@ const TableMaker = ({ onUpdate, onDelete, products, properties }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {products.map((row) => (
+          {jobs.map((row) => (
             <Row key={row.id} row={row} onUpdate = {onUpdate} onDelete = {onDelete} properties = {properties}/>
           ))}
         </TableBody>
