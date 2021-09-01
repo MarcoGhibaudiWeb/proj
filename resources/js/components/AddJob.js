@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import { Form, FormTextarea, FormGroup, FormInput} from "shards-react";
 import Button from '@material-ui/core/Button';
 import PropertySelector from './PropertySelector';

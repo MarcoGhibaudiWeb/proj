@@ -2,15 +2,8 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import PropertySelector from './PropertySelector';
 import StatusSelector from './StatusSelector';
-import TextField from '@material-ui/core/TextField';
 import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
 import { Form, FormTextarea, FormGroup, FormInput } from "shards-react";
-import { LocalConvenienceStoreOutlined } from '@material-ui/icons';
-
-
-
-
 
 
 class UpdateJobForm extends Component {
