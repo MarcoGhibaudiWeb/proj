@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Product from './Product';
 import AddProduct from './AddProduct';
 import TableMaker from './TableMaker';
 

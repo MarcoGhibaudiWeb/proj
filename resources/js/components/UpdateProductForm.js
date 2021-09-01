@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import UpdateProductButton from './UpdateProductButton';
 import Button from '@material-ui/core/Button';
 import PropertySelector from './PropertySelector';
 import StatusSelector from './StatusSelector';
@@ -124,17 +123,15 @@ return response;
                 <span style={{color: "red"}}>{this.state.errors["description"]}</span>
               </FormGroup>
               <FormGroup>
-                <label >First Name</label>
-                <FormInput placeholder="Name" onChange={(e) => this.handleInput('fname', e)} />
-                <span style={{color: "red"}}>{this.state.errors["first name"]}</span>
+              <PropertySelector properties={this.props.properties} onSubmit={this.handleInputProperty} job={this.state.row.currentProduct} />
+                    <StatusSelector onSubmit={this.handleInputProperty} job={this.state.row.currentProduct}/>
+                <TableCell > 
+                    <Button onClick={this.handleSubmit}>Subsmit</Button>
+                </TableCell>                
+                <TableCell > 
+                    <Button onClick={this.handleDelete}>Delete</Button>
+                </TableCell>
               </FormGroup>
-              <FormGroup>
-                <label >Surname</label>
-                <FormInput placeholder="Surname" onChange={(e) => this.handleInput('lname', e)} />
-                <span style={{color: "red"}}>{this.state.errors["last name"]}</span>
-              </FormGroup>
-              <PropertySelector properties={this.props.properties} job={this.state.row}  onSubmit={this.handleInputProperty} />
-              <Button onClick={this.handleSubmit}>Submit</Button>
             </Form>
       
       
