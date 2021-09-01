@@ -111,8 +111,9 @@ class Main extends Component {
 
     return (
       <div style={mystyle}>
-
+        <h3>Jobs List</h3>
         <TableMaker onUpdate={this.handleUpdate} onDelete={this.handleDelete} jobs={this.state.jobs} properties={this.state.properties} />
+        <h3 style={{margin: "0 0 2rem 0"}}>Add a new Job</h3>
         <AddJob onAdd={this.handleAddJob} properties={this.state.properties} />
       </div>
     );

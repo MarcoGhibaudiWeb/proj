@@ -12,8 +12,6 @@ import Paper from '@material-ui/core/Paper';
 import UpdateJobForm from './UpdateJobForm';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 
-
-
 const useStyles = makeStyles({
   root: {
     '& > *': {
@@ -22,6 +20,11 @@ const useStyles = makeStyles({
   },
   container: {
     maxHeight: 600,
+    margin : "3rem 0"
+  },
+  paper: {
+    padding: "0 1rem",
+    backgroundColor: "#f7f7f5" ,
   },
 });
 
@@ -38,7 +41,7 @@ function Row(props) {
     }})
 
   return (
-    <React.Fragment>
+    <React.Fragment >
       <TableRow className={classes.root} onClick={() => setOpen(!open)}>
         <TableCell>
           <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
@@ -68,7 +71,7 @@ const TableMaker = ({ onUpdate, onDelete, jobs, properties }) => {
   const classes = useStyles();
 
   return (
-    <Paper width= '100%'>
+    <Paper className={classes.paper}>
       <TableContainer  className={classes.container}>
       <Table stickyHeader aria-label="collapsible table">
         <TableHead>

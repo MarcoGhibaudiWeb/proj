@@ -39,7 +39,6 @@ export default function PropertySelector(props) {
   }
 }
 
-
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [property, setPoperty] = React.useState('');
@@ -63,12 +62,16 @@ export default function PropertySelector(props) {
 
   };
 
+  const mystyle = {
+    margin: "0 0 1rem -0.3rem",
+  };
+
 
   return (
 
     
-    <div >        
-    <Button onClick={handleClickOpen}>Property</Button>
+    <div>        
+    <Button style={mystyle} onClick={handleClickOpen}>Property</Button>
     <span style={{color: "red"}}>{(errors) ? errors["property"]: ''}</span>
 
       <Dialog open={open} onClose={handleClose}>

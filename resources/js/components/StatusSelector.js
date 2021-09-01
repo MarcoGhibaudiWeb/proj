@@ -15,11 +15,16 @@ const useStyles = makeStyles((theme) => ({
   container: {
     display: 'flex',
     flexWrap: 'wrap',
+    minWidth: '30rem',
+
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: '20rem',
   },
+  button:{
+    margin: "0 0 1rem -0.3rem",
+  }
 }));
 
 export default function StatusSelector(props) {
@@ -48,12 +53,14 @@ export default function StatusSelector(props) {
 
   };
 
+
+
   return (
     <div>        
-    <Button onClick={handleClickOpen}>Status</Button>
+    <Button  className={classes.button} onClick={handleClickOpen}>Status</Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Current st atus: <br></br>{props.job.status}</DialogTitle>
-        <DialogContent>
+        <DialogTitle>Current status: <br></br>{props.job.status}</DialogTitle>
+        <DialogContent >
           <form className={classes.container}>
             <FormControl className={classes.formControl}>
               <InputLabel htmlFor="demo-dialog-native"></InputLabel>
