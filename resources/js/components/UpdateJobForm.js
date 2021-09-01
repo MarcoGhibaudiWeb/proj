@@ -13,12 +13,13 @@ class UpdateJobForm extends Component {
         this.state = {
             row: props,
             value: {
-                summary: props.summary,
-                description: props.description,
-                property: props.property,
-                status: props.status,
+                summary: props.currentJob.summary,
+                description: props.currentJob.description,
+                property: props.currentJob.property,
+                status: props.currentJob.status,
             },
-            errors: {}
+            errors: {},
+            propertyName : '',
 
         }
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -26,6 +27,11 @@ class UpdateJobForm extends Component {
         this.handleDelete = this.handleDelete.bind(this);
         this.handleInputProperty = this.handleInputProperty.bind(this);
         this.validateInput = this.validateInput.bind(this);
+        this.getPropertyName = this.getPropertyName.bind(this);     
+    }
+
+    componentDidMount(){
+        this.getPropertyName(this.props.currentJob)
     }
 
     handleInput(key, e) {
@@ -40,6 +46,7 @@ class UpdateJobForm extends Component {
         var state = Object.assign({}, this.state.value);
         state[key] = e;
         this.setState({ value: state });
+        this.getPropertyName(state);
     }
 
     handleSubmit(e) {
@@ -76,6 +83,16 @@ class UpdateJobForm extends Component {
         this.props.onDelete(this.props.currentJob.id);
     }
 
+    getPropertyName(state){
+        for (let i = 0; i < this.props.properties.length; i++)  {  
+            if (this.props.properties[i].id == state.property){
+                this.setState({propertyName :  this.props.properties[i].name})
+                
+            } 
+        }
+        
+    }
+
     render() {
         const submitstyle = {
             position: "relative",
@@ -84,6 +101,12 @@ class UpdateJobForm extends Component {
         const border = {
             border: "1px black solid",
         };
+        const span = {
+            borderBottom: "1px black solid",
+            margin: "-3rem 0 3rem 0.3rem"
+        }
+
+      
 
         return (
             <Form onSubmit={this.handleSubmit}>
@@ -98,9 +121,11 @@ class UpdateJobForm extends Component {
                     <FormTextarea placeholder="Max 500 char" onChange={(e) => this.handleInput('description', e)} />
                     <span style={{ color: "red" }}>{this.state.errors["description"]}</span>
                 </FormGroup>
-                <FormGroup>
+                <FormGroup style={{display : 'inline-block'}}>
                     <PropertySelector properties={this.props.properties} onSubmit={this.handleInputProperty} job={this.state.row.currentJob} />
+                    <span style={span}>{(this.state.propertyName) ? this.state.propertyName : ''}</span>
                     <StatusSelector onSubmit={this.handleInputProperty} job={this.state.row.currentJob} />
+                    <span >{(this.state.value.status) ? this.state.value.status : ''}</span>
                     <div style={border}></div>
                     <TableCell style={submitstyle}>
                         <Button onClick={this.handleSubmit}>Submit</Button>
