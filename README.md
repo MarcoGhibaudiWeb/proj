@@ -10,10 +10,10 @@ CRUD SPA built with a Laravel API and react modules for the UI
 >Input password for the server when prompted
 >$ CREATE DATABASE laravel_project;
 >In new terminal -> $ cd proj-main
-        >>Run migrations >> $ php artisan migrate
+>Run migrations >> $ php artisan migrate
         <!  If the project fails to connect to the mysql database, be sure to have the right credentials in .env file, default is USERNAME = user PASSWORD = password >
-        >>Run seeders >> $ php artisan db:seed
-        >>Start Project >> $ php artisan serve
+>Run seeders >> $ php artisan db:seed
+>Start Project >> $ php artisan serve
 
 >Navigate to newly opened localhost
 
