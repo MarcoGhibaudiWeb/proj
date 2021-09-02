@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import PropertySelector from './PropertySelector';
 import StatusSelector from './StatusSelector';
-import TableCell from '@material-ui/core/TableCell';
-import TableRow from '@material-ui/core/TableRow';
 import { Form, FormTextarea, FormGroup, FormInput } from "shards-react";
 
 
@@ -57,7 +55,13 @@ class UpdateJobForm extends Component {
             let id = this.state.row.currentJob.id;
             this.props.onUpdate(this.state.value, id);
         }
-        else { alert('Please check any incorrect value') }
+        else {
+          for (const key in this.state.value) {
+            let value = this.state.value[key];
+            this.validateInput(key, value);
+          }
+          alert('Please check any incorrect value')
+        }
     }
 
     validateInput(key, value) {
@@ -94,12 +98,12 @@ class UpdateJobForm extends Component {
             } else { errors["last name"] = ""; }
             break;
           case 'property':
-            if (value === null || value.match(/^ *$/) !== null) {
+            if (value === null) {
               errors["property"] = "Can't be empty";
             } else { errors["property"] = ""; }
             break;
           case 'status':
-            if (value === null || value.match(/^ *$/) !== null) {
+            if (value === null ) {
               errors["status"] = "Can't be empty";
             } else { errors["status"] = ""; }
             break;
@@ -143,12 +147,12 @@ class UpdateJobForm extends Component {
                 <h5>Edit job or Delete</h5>
                 <FormGroup style={{ margin: "1rem 0" }}>
                     <label >Summary</label>
-                    <FormTextarea placeholder="Max 250 char" onChange={(e) => this.handleInput('summary', e)} />
+                    <FormTextarea placeholder="Max 150 char" value={this.state.value.summary} onChange={(e) => this.handleInput('summary', e)} />
                     <span style={{ color: "red" }}>{this.state.errors["summary"]}</span>
                 </FormGroup>
                 <FormGroup style={{ margin: "1rem 0" }}>
                     <label >Description</label>
-                    <FormTextarea placeholder="Max 500 char" onChange={(e) => this.handleInput('description', e)} />
+                    <FormTextarea placeholder="Max 500 char" value={this.state.value.description} onChange={(e) => this.handleInput('description', e)} />
                     <span style={{ color: "red" }}>{this.state.errors["description"]}</span>
                 </FormGroup>
                 <FormGroup style={{ display: 'inline-block' }}>

@@ -88,12 +88,12 @@ class AddJob extends Component {
         } else { errors["last name"] = ""; }
         break;
       case 'property':
-        if (value === null || value.match(/^ *$/) !== null) {
+        if (value === null ) {
           errors["property"] = "Can't be empty";
         } else { errors["property"] = ""; }
         break;
       case 'status':
-        if (value === null || value.match(/^ *$/) !== null) {
+        if (value === null ) {
           errors["status"] = "Can't be empty";
         } else { errors["status"] = ""; }
         break;
